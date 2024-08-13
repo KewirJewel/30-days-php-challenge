@@ -1,51 +1,59 @@
+<?php 
+session_start() 
+?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>To-Do List</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Todo List</title>
+    <link rel="stylesheet" href="styles.css"> 
 </head>
-<body> 
-
-    <h1>To-Do List</h1>
-    <form action="index.php" method="post">
-        <input type="text" name="task" placeholder="Add task"><br>
-      Created:  <input type="date" name="dateadded" placeholder="Add createddate"><br>
-      Deathline: <input type="date" name="deathline" placeholder="Add enddate">
-         <h2 id="Alert"></h2>
-         <ul id="list-items" class="list-items"></ul>
-        <input type="submit" value="Add"><br>
+<body>
+    <h1>To-do List</h1>
+    <?php if (isset($successMessage)): ?>
+       echo  <div class="alert alert:success-message"><?php echo $successMessage; ?></div>
+        <?php unset($successMessage) ?>
+    <?php endif; ?>
+    <form action="index1.php" method="post">
+        <input type="text" name="task" placeholder="Add a task">
+        <select name="priority">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
+        </select>
+        <select name="status">
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+        </select>
+        <button type="submit" name="submit">Add</button>
     </form>
-    <ul>
-        <?php 
-        foreach ($_SESSION['tasks'] as $index => $task): ?>
-            <li>
-                <?php echo $index; ?>
-                <?php echo $task; ?>
-                <form method="POST"  action="add_task.php">
-                    <div class="alert alert-success">
-                    <input type="hidden" name="task_index">
-                    <strong>List was successful!</strong>
-                    <input type="text" name="edited_task" >
-                    <button type="submit" name="edit_task" value=" edit">Edit</button>
-                    <button type="submit" name="delete_task" value="delete">Delete</button>
-                  
-        </div>
-                </form>
-            </li>
-        <?php endforeach; ?>
-      </ul>
-        <ul id="task_list">
-            </ul>
-    </div>
-    <select id="filter">
-        <option value="completed">Completed</option>
-        <option value="pending">Pending</option>
-    </select>  
 
-    <select id="sort">
-        <option value="priority">Priority</option>
-    </select>
-    <ul id="taskList">
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Task</th>
+                <th>Created At</th>
+                <th>Priority</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($_SESSION['todo_list'] as $key => $task): ?>
+                <tr>
+                    <td><?php echo $task['id']; ?></td>
+                    <td><?php echo $task['task']; ?></td>
+                    <td><?php echo $task['created_at']; ?></td>
+                    <td><?php echo $task['priority']; ?></td>
+                    <td><?php echo $task['status']; ?></td>
+                    <td>
+                        <a href="index1.php?edit=<?php echo $key ?>">Edit</a>
+                        <a href="index1.php?delete=<?php echo $key ?>">Delete</a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 </body>
 </html>

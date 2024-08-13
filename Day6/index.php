@@ -1,65 +1,44 @@
 <?php
 session_start();
-if (!isset($_SESSION['tasks'])) {
-    echo $_SESSION['tasks'] = [];
+
+if (!isset($_SESSION['todo_list'])) {
+    $_SESSION['todo_list'] = [];
+}
+function generateUniqueId() {
+    return uniqid();
+}
+function sortByPriority($a, $b) {
+    $priorityMap = ['high' => 2, 'medium' => 1, 'low' => 0];
+    return $priorityMap[$b['priority']] - $priorityMap[$a['priority']];
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $action = isset($_POST['action']) ? $_POST['action'] : '';
+    $task = $_POST['task'];
+    $priority = $_POST['priority'];
+    $status = $_POST['status'];
 
-    switch ($action) {
-        case 'add':
-            addTask($_POST['task']);
-            break;
-        case 'edit':
-            editTask($_POST['taskId'], $_POST['newTask']);
-            break;
-        case 'delete':
-            deleteTask($_POST['taskId']);
-            break;
-        case 'complete':
-            completeTask($_POST['taskId']);
-            break;
-    }
-}
+    $newTask = [
+        'id' => generateUniqueId(),
+        'task' => $task,
+        'created_at' => date('Y-m-d H:i:s'),
+        'priority' => $priority,
+        'status' => $status
+    ];
 
-function addTask($task) {
-     if (isset($_POST['add_task'])) {
-    $newTask = $_POST['task'];
-    $taskId = uniqid();
-    $_SESSION['tasks'][] = $newTask;
-    $_SESSION['tasks'][$taskId] = [
-        'text' => $task,
-        'completed' => false,
-        'priority' => 'Medium','High','Low',
-        'deadline' => null,
-        'created_at' => date('Y-m-d H:i:s')];
-    }
+    $_SESSION['todo_list'][$newTask['id']] = $newTask;
+    usort($_SESSION['todo_list'], 'sortByPriority');
+    $successMessage = "Task added successfully!";
+    $task =  $_SESSION['todo_list'];
+    var_dump($task);
+   
 }
-
-function editTask($taskId, $newTask) {
-    if (isset($_SESSION['tasks'][$taskId])) {
-        if (isset($_POST['edit_task'])) {
-            $newTask = $_POST['edited_task'];
-             $_SESSION['tasks'][$taskId]['text'] = $newTask;
-    }
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+         unset($_SESSION['todo_list'][$id]);
+    $_SESSION['todo_list'] = array_values($_SESSION['todo_list']); // Reindex array
 }
+if (isset($_GET['edit'])) {
+    $id = $_GET['edit'];
+    
 }
-
-function deleteTask($taskId) {
-    if (isset($_SESSION['tasks'][$taskId])) {
-        if (isset($_POST['delete_task'])) {
-            unset($_SESSION['tasks'][$taskId]);
-            die;
-            $_SESSION['tasks'] = array_values($_SESSION['tasks']);
-    }
-}
-}
-
-function completeTask($taskId) {
-    if (isset($_SESSION['tasks'][$taskId])) {
-        $_SESSION['tasks'][$taskId]['completed'] = true;
-    }
-}
-header('Location: index.html');
-exit;
+header("Location: index.php") //redirct to index.html form
 ?>

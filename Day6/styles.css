@@ -1,51 +1,62 @@
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: whitesmoke;
-}
-
-.LIST {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
     background-color: grey;
+    margin: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  form {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  input[type="text"] {
+    padding: 10px;
+    border: 1px solid #473131;
     border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-    margin-bottom: 20px;
-}
-
-form {
-    margin-bottom: 20px;
-}
-
-input[type="text"] {
+    flex-grow: 1;
+  }
+  
+  select {
     padding: 10px;
-    border: 1px solid black;
-    border-radius: 3px;
-    width: 80%;
-}
-
-button[type="submit"] {
+    border: 1px solid #d69595;
+    border-radius: 5px;
+  }
+  
+  button {
     padding: 10px 20px;
-    background-color: green;
-    color: yellow;
-    border: 1px solid black;
-    border-radius: 2px;
+    background-color: rgb(14, 233, 14);
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    size
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-}
-
-li {
-    margin-bottom: 10px;
-    border: 1px solid green;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
     padding: 10px;
-    border-radius: 3px;
-}
+    text-align: left;
+    border-bottom: 1px solid blue;
+  }
+  
+  th {
+    background-color: purple;
+  }
+  tbody,tr {
+    background-color: rgb(122, 112, 216);
+  }
+  
+  .success-message {
+    color: green;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
