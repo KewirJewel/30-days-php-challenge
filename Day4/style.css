@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    text-align: center;
+    background-color: grey;
+}
+form {
+    background-color: purple;
+    max-width: 30%;
+    margin: 0 auto;
+    padding: 20px;
+    color: whitesmoke;
+    display: WHITE;
+    border: 30%;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+button[type="submit"] {
+    border: 10%;
+    background-color: pink;
+    color: pink;
+    border-radius: 5px;
+    display: flexbox;
+}
