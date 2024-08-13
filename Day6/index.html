@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body> 
+
+    <h1>To-Do List</h1>
+    <form action="index.php" method="post">
+        <input type="text" name="task" placeholder="Add task"><br>
+      Created:  <input type="date" name="dateadded" placeholder="Add createddate"><br>
+      Deathline: <input type="date" name="deathline" placeholder="Add enddate">
+         <h2 id="Alert"></h2>
+         <ul id="list-items" class="list-items"></ul>
+        <input type="submit" value="Add"><br>
+    </form>
+    <ul>
+        <?php 
+        foreach ($_SESSION['tasks'] as $index => $task): ?>
+            <li>
+                <?php echo $index; ?>
+                <?php echo $task; ?>
+                <form method="POST"  action="add_task.php">
+                    <div class="alert alert-success">
+                    <input type="hidden" name="task_index">
+                    <strong>List was successful!</strong>
+                    <input type="text" name="edited_task" >
+                    <button type="submit" name="edit_task" value=" edit">Edit</button>
+                    <button type="submit" name="delete_task" value="delete">Delete</button>
+                  
+        </div>
+                </form>
+            </li>
+        <?php endforeach; ?>
+      </ul>
+        <ul id="task_list">
+            </ul>
+    </div>
+    <select id="filter">
+        <option value="completed">Completed</option>
+        <option value="pending">Pending</option>
+    </select>  
+
+    <select id="sort">
+        <option value="priority">Priority</option>
+    </select>
+    <ul id="taskList">
+    </ul>
+</body>
+</html>
